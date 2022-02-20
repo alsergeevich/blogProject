@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    {% for item in posts %}
+        <div class="card mb-3">
+            <div class="card-header">
+                Категория: <a href="{{ item.cat.get_absolute_url }}">{{ item.cat }}</a>
+            </div>
+            <div class="card-body">
+                <div class="media">
+                    {% if item.photo %}
+                        <img src="{{ item.photo.url }}" width="200" class="mr-3">
+                        {% else %}
+                        <img src="https://picsum.photos/200/300" width="200" class="mr-3">
+                    {% endif %}
+                    <div class="media-body">
+                        <h5 class="card-title">{{ item.title }}</h5>
+                        <p class="card-text">{{ item.content|linebreaks|truncatewords:10 }}</p>
+                        <a href="{{ item.get_absolute_url }}" class="btn btn-primary">Подробнее..</a>
+                    </div>
+                </div>
+
+            </div>
+            <div class="card-footer text-muted">
+                {{ item.time_create|date:'Y-m-d' }}
+            </div>
+        </div>
+    {% empty %}
+        Oops...
+    {% endfor %}
+{% endblock %}
