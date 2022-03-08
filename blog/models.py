@@ -39,3 +39,11 @@ class Category(models.Model):
         verbose_name = 'Категория'  # заменяем в админке название модели
         verbose_name_plural = 'Категории'  # определяем название во множественном числе
         ordering = ['id', ]  # определяем порялок сортировки
+
+
+class Comments(models.Model):
+    post = models.ForeignKey(Posts, on_delete=models.CASCADE, related_name='comments_posts', verbose_name='Описание',
+                             blank=True, null=True)
+    time_create = models.DateTimeField(auto_now_add=True, verbose_name='Время создания')
+    content = models.TextField(blank=True, verbose_name='Текст комментария')
+    is_published = models.BooleanField(default=False, verbose_name='Статус')
