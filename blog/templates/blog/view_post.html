@@ -20,7 +20,44 @@
 
         </div>
         <div class="card-footer text-muted">
-            {{ post.time_create|date:'Y-m-d' }}
+            Дата публикации: {{ post.time_create|date:'Y-m-d' }}
         </div>
     </div>
+
+    <p>Комментарии</p>
+    <hr>
+    {% for item in post.comments_posts.all %}
+        {% if item.is_published %}
+            <div class="card mb-3">
+                <div class="card-body">
+                    {{ item.content }}
+                </div>
+                <div class="card-footer text-muted">
+                    Дата создания: {{ item.time_create|date:'Y-m-d' }}
+                </div>
+            </div>
+        {% endif %}
+    {% empty %}
+        <p>Нет комментариев</p>
+    {% endfor %}
+    {% if messages %}
+    <div class="alert alert-success" role="alert">
+        {% for m in messages %}
+            {{ m }}
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <div class="col-4">
+        <form action="" id="add_form" method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+        </form>
+    <button form="add_form" type="submit" class="btn btn-primary" >Добавить</button>
+
+    </div>
+
+
+
+
 {% endblock %}

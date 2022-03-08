@@ -15,8 +15,6 @@ class PostsAdmin(admin.ModelAdmin):
     save_on_top = True
 
 
-
-
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ('id', 'name')
     list_display_links = ('id', 'name')
@@ -24,8 +22,17 @@ class CategoryAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('name',)}
 
 
+class CommentAdmin(admin.ModelAdmin):
+    list_display = ('id', 'content', 'time_create',  'is_published')
+    list_display_links = ('id', 'content')
+    list_filter = ('time_create', 'is_published')
+    search_fields = ('id', 'content')
+    readonly_fields = ('time_create',)
+
+
 admin.site.register(Posts, PostsAdmin)
 admin.site.register(Category, CategoryAdmin)
+admin.site.register(Comments, CommentAdmin)
 
 admin.site.site_title = 'Админ-панель сайта'
 admin.site.site_header = 'Админ-панель сайта'
