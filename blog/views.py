@@ -1,4 +1,6 @@
-from django.shortcuts import render
+from django.conf import settings
+from django.core.mail import send_mail
+from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, FormView
 from .models import *
@@ -70,3 +72,22 @@ class ShowPost(FormMixin, DetailView):
         context = super().get_context_data(**kwargs)
         context['categories'] = Category.objects.all()
         return context
+
+
+class ContactFormView(FormView):
+    form_class = ContactForm
+    template_name = 'blog/zakazform.html'
+    success_url = reverse_lazy('zakaz')
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        context['title'] = 'Форма заказа'
+        return context
+
+    def form_valid(self, form):
+        name = form.cleaned_data['name']
+        from_email = form.cleaned_data['email']
+        content = form.cleaned_data['content']
+        send_mail(f'Заказ от {name}', content + f' \nEmail заказчика {from_email}', settings.EMAIL_HOST_USER, ['yuliazaskotchenko@yandex.ru'])
+        return redirect('zakaz')

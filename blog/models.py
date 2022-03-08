@@ -3,6 +3,7 @@ from django.urls import reverse
 from autoslug.fields import AutoSlugField
 
 
+
 class Posts(models.Model):
     title = models.CharField(max_length=255, verbose_name='Заголовок')
     slug = AutoSlugField(max_length=255, unique=True, db_index=True, verbose_name='URL', populate_from='title')
@@ -46,6 +47,7 @@ class Comments(models.Model):
                              blank=True, null=True)
     time_create = models.DateTimeField(auto_now_add=True, verbose_name='Время создания')
     content = models.TextField(blank=True, verbose_name='Текст комментария')
+
     is_published = models.BooleanField(default=False, verbose_name='Статус')
 
     class Meta:
