@@ -30,9 +30,21 @@ class CommentAdmin(admin.ModelAdmin):
     readonly_fields = ('time_create',)
 
 
+class MyPostAdmin(admin.ModelAdmin):
+    list_display = ('id', 'title', 'time_create', 'is_published')  # поля которые будут отображаться
+    list_display_links = ('id', 'title')  # поля которые будут ссылками
+    search_fields = ('title', 'content')  # по каким полям будет осуществляться поиск
+    list_editable = ('is_published',)  # редактируемое поле
+    list_filter = ('is_published', 'time_create')  # список полей по которым мы сможем осуществлять фильтрацию
+    fields = ('title', 'content', 'photo', 'is_published', 'time_create', 'time_update')
+    readonly_fields = ('time_create', 'time_update')
+    save_on_top = True
+
+
 admin.site.register(Posts, PostsAdmin)
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Comments, CommentAdmin)
+admin.site.register(My_Post, MyPostAdmin)
 
 admin.site.site_title = 'Админ-панель сайта'
 admin.site.site_header = 'Админ-панель сайта'

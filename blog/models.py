@@ -3,7 +3,6 @@ from django.urls import reverse
 from autoslug.fields import AutoSlugField
 
 
-
 class Posts(models.Model):
     title = models.CharField(max_length=255, verbose_name='Заголовок')
     slug = AutoSlugField(max_length=255, unique=True, db_index=True, verbose_name='URL', populate_from='title')
@@ -54,3 +53,26 @@ class Comments(models.Model):
         verbose_name = 'Комментарий'  # заменяем в админке название модели
         verbose_name_plural = 'Комментарии'  # определяем название во множественном числе
         ordering = ['time_create', ]  # определяем порялок сортировки
+
+
+class My_Post(models.Model):
+    title = models.CharField(max_length=255, verbose_name='Заголовок')
+    slug = AutoSlugField(max_length=255, unique=True, db_index=True, verbose_name='URL', populate_from='title')
+    content = models.TextField(blank=True, verbose_name='Текст описание')
+    photo = models.ImageField(upload_to="photos/%Y/%m/%d/", verbose_name='Фотография')
+    email = models.CharField(max_length=255, verbose_name='Email')
+    time_create = models.DateTimeField(auto_now_add=True, verbose_name='Время создания')
+    time_update = models.DateTimeField(auto_now=True, verbose_name='Время изменения')
+    is_published = models.BooleanField(default=False, verbose_name='Опубликовано')
+
+    def __str__(self):
+        return self.title
+
+    def get_absolute_url(self):
+        return reverse('post', kwargs={'post_slug': self.slug})
+
+    class Meta:
+        verbose_name = 'Обо мне'  # заменяем в админке название модели
+        verbose_name_plural = 'Обо мне'  # определяем название во множественном числе
+        ordering = ['time_create', 'title']  # определяем порядок сортировки
+

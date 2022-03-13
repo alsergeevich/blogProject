@@ -89,5 +89,21 @@ class ContactFormView(FormView):
         name = form.cleaned_data['name']
         from_email = form.cleaned_data['email']
         content = form.cleaned_data['content']
-        send_mail(f'Заказ от {name}', content + f' \nEmail заказчика {from_email}', settings.EMAIL_HOST_USER, ['yuliazaskotchenko@yandex.ru'])
+        send_mail(f'Заказ от {name}', content + f' \nEmail заказчика {from_email}', settings.EMAIL_HOST_USER,
+                  ['yuliazaskotchenko@yandex.ru'])
         return redirect('zakaz')
+
+
+class MyPostsShow(ListView):
+    model = My_Post
+    template_name = 'blog/mypost.html'
+    context_object_name = 'posts'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # context['categories'] = Category.objects.all()
+        context['title'] = 'Обо мне'
+        return context
+
+    def get_queryset(self):
+        return My_Post.objects.filter(is_published=True)

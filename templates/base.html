@@ -35,7 +35,7 @@
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div class="navbar-nav">
                     <a class="nav-link" aria-current="page" href="{% url 'zakaz' %}">Заказать</a>
-                    <a class="nav-link" href="#">Обо мне</a>
+                    <a class="nav-link" href="{% url 'mypost' %}">Обо мне</a>
                 </div>
             </div>
         </div>
@@ -66,52 +66,33 @@
         <!---->
         <!---->
         <!--Start block content-->
-        <div class="col-md-9">
-            <div class="container">
+
                 <!---->
                 {% block content %}
                 {% endblock %}
                 <!---->
-            <!--Start pagination-->
-            {% if page_obj.has_other_pages %}
-                <nav aria-label="...">
-                    <ul class="pagination">
-                        {% if page_obj.has_previous %}
-                            <li class="page-item">
-                                <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Предыдущая</a>
-                            </li>
-                        {% else %}
-                            <li class="page-item disabled">
-                                <a class="page-link" href="#">Предыдущая</a>
-                            </li>
-                        {% endif %}
-                        {% for p in page_obj.paginator.page_range %}
-                            {% if page_obj.number == p %}
-                                <li class="page-item active"><a class="page-link" href="?page={{ p }}">{{ p }}</a></li>
-                            {% elif p > page_obj.number|add:-3 and p < page_obj.number|add:3 %}
-                                <li class="page-item"><a class="page-link" href="?page={{ p }}">{{ p }}</a></li>
-                            {% endif %}
-                        {% endfor %}
 
-                        {% if page_obj.has_next %}
-                            <li class="page-item">
-                                <a class="page-link" href="?page={{ page_obj.next_page_number }}">Следующая</a>
-                            </li>
-                        {% else %}
-                            <li class="page-item disabled">
-                                <a class="page-link" href="#">Следующая</a>
-                            </li>
-                        {% endif %}
-                    </ul>
-                </nav>
-            {% endif %}
-            <!--End pagination-->
-            </div>
-        </div>
+
         <!--End block content-->
     </div>
 </div>
-
+<!--Block footer-->
+<div class="container-fluid">
+<footer class="pt-4 my-md-5 pt-md-5 border-top">
+    <div class="row">
+      <div class="col-12 col-md">
+        <h5>Контакты:</h5>
+        <ul class="list-unstyled text-small">
+          <li><a href="" class="link-secondary">Viber: +7(922)-39-69-181</a></li>
+          <li><a href="" class="link-secondary">Whatsapp: +7(922)-39-69-181</a></li>
+          <li><a href="" class="link-secondary">Phone: +7(922)-39-69-181</a></li>
+          <li><a href="" class="link-secondary">Email: alsergeevich@gmail.com</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+</div>
+<!--End block footer-->
 
 <!-- Вариант 1: Bootstrap в связке с Popper -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"

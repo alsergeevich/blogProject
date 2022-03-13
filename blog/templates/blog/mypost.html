@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="col-md-12">
+        <div class="container">
+            {% for item in posts %}
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <h2>{{ item.title }}</h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="media">
+                            {% if item.photo %}
+                                <img src="{{ item.photo.url }}" width="600" class="mr-3">
+                            {% else %}
+                                <img src="https://picsum.photos/200/300" width="200" class="mr-3">
+                            {% endif %}
+                            <div class="media-body">
+                                <p class="card-text">{{ item.content|linebreaks }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer text-muted">
+                        {{ item.time_create}}
+                    </div>
+                </div>
+            {% empty %}
+                Oops...
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

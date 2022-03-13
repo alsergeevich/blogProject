@@ -1,59 +1,66 @@
 {% extends 'base.html' %}
 {% block title %}
-{{ title }}
+    {{ title }}
 {% endblock %}
 {% block content %}
-    <div class="container mb-5">
-        <div class="card">
-            <div class="card-header">
-                <h1>Как сделать заказ</h1>
+    <div class="col-md-9">
+        <div class="container">
+            <div class="container mb-5">
+                <div class="card">
+                    <div class="card-header">
+                        <h1>Как сделать заказ</h1>
+                    </div>
+                    <div class="card-body">
+                        <blockquote class="blockquote mb-0">
+                            <p>Чтобы сделать заказ заполните форму ниже. В тексте сообщения укажите название изделия и
+                                его номер
+                                в каталоге. Например, комплект подушек №1 с принтом №1. Так же в сообщении укажите город
+                                куда
+                                будет осуществленна доставка. После получения заказа я проведу расчёт
+                                срока выполнения, стоимости заказа, стоимости доставки, размера предоплаты и свяжусь с
+                                вами.</p>
+                            <footer class="blockquote-footer"><cite title=""></cite></footer>
+                        </blockquote>
+                    </div>
+                </div>
             </div>
-            <div class="card-body">
-                <blockquote class="blockquote mb-0">
-                    <p>Чтобы сделать заказ заполните форму ниже. В тексте сообщения укажите название изделия и его номер
-                        в каталоге. Например, комплект подушек №1 с принтом №1. Так же в сообщении укажите город куда
-                        будет осуществленна доставка. После получения заказа я проведу расчёт
-                    срока выполнения, стоимости заказа, стоимости доставки, размера предоплаты и свяжусь с вами.</p>
-                    <footer class="blockquote-footer"><cite title=""></cite></footer>
-                </blockquote>
-            </div>
+            <h1>{{ title }}</h1>
+            <form method="post">
+                {% csrf_token %}
+                {{ form.non_field.errors }}
+                <div class="mb-3">
+                    <label for="{{ form.name.id_for_label }}" class="form-label">Ваше имя</label>
+                    {{ form.name }}
+                    <div class="invalid-feedback">
+                        {{ form.name.errors }}
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="{{ form.email.id_for_label }}" class="form-label">Ваш Email</label>
+                    {{ form.email }}
+                    <div class="invalid-feedback">
+                        {{ form.email.errors }}
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="{{ form.content.id_for_label }}" class="form-label">Сообщение</label>
+                    {{ form.content }}
+                    <div class="invalid-feedback">
+                        {{ form.content.errors }}
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="{{ form.captcha.id_for_label }}" class="form-label">{{ form.captcha.label }}</label>
+                    {{ form.captcha }}
+                    <div class="invalid-feedback">
+                        {{ form.captcha.errors }}
+                    </div>
+                </div>
+
+
+                <button type="submit" class="btn btn-primary btn-lg">Отправить</button>
+
+            </form>
         </div>
     </div>
-    <h1>{{ title }}</h1>
-    <form method="post">
-    {% csrf_token %}
-         {{ form.non_field.errors }}
-        <div class="mb-3">
-            <label for="{{ form.name.id_for_label }}" class="form-label">Ваше имя</label>
-            {{ form.name }}
-            <div class="invalid-feedback">
-                {{ form.name.errors }}
-            </div>
-        </div>
-        <div class="mb-3">
-            <label for="{{ form.email.id_for_label }}" class="form-label">Ваш Email</label>
-            {{ form.email }}
-            <div class="invalid-feedback">
-                {{ form.email.errors }}
-            </div>
-        </div>
-        <div class="mb-3">
-            <label for="{{ form.content.id_for_label }}" class="form-label">Сообщение</label>
-            {{ form.content }}
-            <div class="invalid-feedback">
-                {{ form.content.errors }}
-            </div>
-        </div>
-        <div class="mb-3">
-            <label for="{{ form.captcha.id_for_label }}" class="form-label">{{ form.captcha.label }}</label>
-            {{ form.captcha }}
-            <div class="invalid-feedback">
-                {{ form.captcha.errors }}
-            </div>
-        </div>
-
-
-    <button type="submit" class="btn btn-primary btn-lg" >Отправить</button>
-
-    </form>
 {% endblock %}
